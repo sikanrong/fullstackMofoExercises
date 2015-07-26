@@ -1,3 +1,8 @@
+#!/usr/bin/env ruby
+
+#Aleksandra Gabka, Alexander Pilafian / 2015
+#https://fullstackmofo.wordpress.com/2015/07/26/exercise-03-fibonacci-sequence/
+
 $fib_array = []
 $last_number = 0
 
@@ -17,5 +22,6 @@ def get_n(n)
     get_n(n-1)
 end
 
-puts(get_n(8).join(", "))
-
+puts "Enter a number for N (and press <enter>):"
+$input = gets.chomp
+puts(get_n($input.to_i).join(", "))
