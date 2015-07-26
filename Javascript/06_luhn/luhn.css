@@ -1,0 +1,39 @@
+body {
+	background-color: #FFFF99;
+	font-family: Arial, sans-serif;
+}
+
+p.validMessage {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+input {
+	background-color: gold;
+	border-color: black;
+	border-width: 3px;
+	margin-top: 3px;
+	margin-right: 3px;
+}
+
+#checkmark{
+    display: none;
+}
+
+form.valid #checkmark{
+    display: inline-block;
+}
+
+form.invalid input{
+    border-color: red;
+}
+
+form.valid input{
+    border-color: green;
+}
+  
+form {
+	font-weight: bold;
+	font-size: 15px;
+}
+

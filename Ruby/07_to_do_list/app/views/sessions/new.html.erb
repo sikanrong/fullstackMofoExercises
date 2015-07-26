@@ -1,0 +1,11 @@
+<h1>Log in</h1>
+<% if @last_failed %>
+    <p>Incorrect login details</p>
+    <% end %>
+
+<%= form_for(:session, url: 'login') do |f| %>
+
+    <%= f.email_field :email, :placeholder => "Email" %><br>
+    <%= f.password_field :password, :placeholder => "Password" %><br>
+    <%= f.submit "Log in" %><br>
+<% end %>

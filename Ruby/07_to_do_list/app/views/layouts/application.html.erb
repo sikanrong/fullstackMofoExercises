@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todos</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="container">
+<div id="header">
+  To-do list
+</div>
+
+<div id="nav">
+  <% if current_user %>
+      <ul>
+      <li></li><%= current_user.first_name %><%= current_user.last_name %></li>
+      <li><%= current_user.email %></li>
+      <li><%= link_to "Log out", logout_path, method: "delete" %></li></ul>
+  <% else %>
+      <ul><li><%= link_to "Login", 'login' %></li>
+      <li><%= link_to "Signup", 'signup' %></li></ul>
+  <% end %>
+</div>
+
+<div id="section">
+<%= yield %>
+</div>
+
+<div id="footer">
+  <%= link_to "reis", 'mailto:rivvel@gmail.com' %>
+</div>
+</div>
+</body>
+</html>

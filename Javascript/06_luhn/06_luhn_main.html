@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Luhn Algorithm</title>
+	<link rel="stylesheet" type="text/css" href="luhn.css">
+</head>
+<body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="06_luhn.js"></script>
+<form>
+Card number:<br>
+<input type="number" name="card_number"><span id="checkmark">&#10003;</span>
+</form>
+
+<p class="validMessage invalid" id="errorCardLength">Number should be 16 digits long.</p>
+<p class="validMessage valid" id="success">Valid number!</p>
+<p class="validMessage invalid" id="errorInvalid">Not (a) Valid Number!</p>
+
+</body>
+</html>

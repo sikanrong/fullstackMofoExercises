@@ -1,0 +1,10 @@
+<h2>This is your list of tasks:</h2>
+<% @todos.each_with_index do |t, i|%>
+    <div>
+      <%=(i+1)%>)
+      <%= t.content %>
+      <%= link_to "Edit", edit_todo_path(t) %>
+      <%= link_to "Delete", todo_path(t), method: "delete" %></p></div>
+
+<% end %>
+<%= link_to "Add a new task", 'todos/new' %>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hanoi</title>
+</head>
+<body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+
+var a = [5, 4, 3, 2, 1, 0];
+var b = [];
+var c = [];
+
+Hanoi = function(hanoiDisk, hanoiSource, hanoiDest, hanoiSpare) {
+    this.disk = hanoiDisk;
+    this.steps = [];
+    this.source = hanoiSource;
+    this.dest = hanoiDest;
+    this.spare = hanoiSpare;
+    this.moveDisk = function (source, dest) {
+        dest.push(source.pop());
+        this.steps.push([this.source.slice(0), this.dest.slice(0), this.spare.slice(0)]);
+    };
+    this.moveTower = function(disk, source, dest, spare) {
+        if (disk === 0) {
+            this.moveDisk(source, dest);
+        }
+        else {
+            this.moveTower((disk - 1), source, spare, dest);
+            this.moveDisk(source, dest);
+            this.moveTower((disk - 1), spare, dest, source);
+        }
+    };
+	this.moveTower(this.disk, this.source, this.dest, this.spare);
+};
+
+$(document).ready(function() {
+    var pegs = [];
+	for (var i=0; i < 3; i++) {
+		var id = "peg" + (i+1);
+		var peg_element = $('<div/>', {
+			id: id,
+			class: "peg",
+		});
+		peg_element.appendTo('body');
+		pegs.push(peg_element);
+	};
+	$(".peg").css({
+	    "background-color": "goldenrod",
+		"height": 130,
+		"width": 10,
+		"top": 50,
+		"position": "absolute",
+		})
+	var left = 200;
+	$.each(pegs, function(index, peg){
+        peg.css("left", left);
+		left += 200;
+	});
+	var bottomBar = $('<div/>', {
+		id: "bottomBar",
+	});
+	bottomBar.appendTo('body');
+	$("#bottomBar").css({
+	    "background-color": "goldenrod",
+		"height": 10,
+		"width": 700,
+		"top": 180,
+		"left": 50,
+		"position": "absolute",
+		});
+    var disks = [];
+    for (var i=0; i < 6; i++) {
+        var id = "disk" + (i+1);
+        var disk_element = $('<div/>', {
+            id: id,
+            class: "disk",
+        });
+        disk_element.appendTo('body');
+        disks.push(disk_element);
+    };
+    $(".disk").css({
+        "height": 20,
+        "position": "absolute",
+
+    });
+    colors = ["coral", "cornflowerblue", "teal", "gold", "greenyellow", "indianred"];
+
+    $.each(disks, function(index, disk){
+
+        disk.css({width: 60 + (index * 20),
+            "background-color": colors[index],
+            "top": 60 + (index * 20),
+            "left": 175 - (index * 10),
+
+        });
+    });
+    var hanoi = new Hanoi(5, a, b, c);
+    var currentStep = 0;
+    var animate = function(){
+        var frameDuration = 300; //milliseconds
+        setTimeout(function(){
+            step = hanoi.steps[currentStep];
+            $.each(step, function(peg_index, step_disk_ar){
+                bottomBarTop = bottomBar.css("top");
+                topPos = parseInt(bottomBarTop);
+                $.each(step_disk_ar, function(n, disk_index){
+                    peg = pegs[peg_index];
+                    pegDisk = disks[disk_index];
+                    pegDiskHeight = pegDisk.css("height");
+                    pegDiskWidth = pegDisk.css("width");
+                    pegWidth = peg.css("width");
+                    pegLeft = peg.css("left");
+                    topPos -= parseInt(pegDiskHeight);
+                    leftPos = parseInt(pegLeft) - parseInt(pegDiskWidth) / 2 + parseInt(pegWidth) / 2;
+                    pegDisk.animate({
+                    "top": topPos,
+                    "left": leftPos
+                    });
+                });
+            });
+            currentStep += 1;
+
+            if (currentStep != hanoi.steps.length) {
+                animate();}
+        }, frameDuration);
+
+    };
+    animate();
+
+});
+
+
+
+//console.log(a);
+//console.log(b);
+//console.log(c);
+
+</script>
+
+</body>
+</html>
+

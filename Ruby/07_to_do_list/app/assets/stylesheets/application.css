@@ -1,0 +1,90 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+html{
+    height: 100%;
+}
+
+body {
+    background-color: #B2B2B2;
+    font-family: sans-serif;
+    height: 100%;
+    width:800px;
+    margin: 0 auto;
+
+}
+a {
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 2px;
+    color: white;
+    background-color: black;
+}
+
+#container {
+    position: relative;
+    height: 100%;
+}
+
+#header {
+    background-color: #900000;
+    font-size: 50px;
+    text-decoration: underline;
+    color: #FFA8A8;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+#nav {
+    background-color:#CF7C7C;
+    width:800px;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+ul, li{
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+
+#nav ul li {
+    display: inline;
+    padding: 5px;
+}
+
+#section {
+    background-color: #F0F0F0;
+    position: absolute;
+    top: 156px;
+    bottom: 30px;
+    display: inline-block;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#footer {
+    background-color: black;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+
+}
