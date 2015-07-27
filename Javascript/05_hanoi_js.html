@@ -1,144 +1,192 @@
+<!-- 
+Towers of Hanoi
+Aleksandra Gabka (rivvel@gmail.com) / Alexander Pilafian (sikanrong@gmail.com) / 2015
+https://fullstackmofo.wordpress.com/2015/07/26/42/
+-->
+
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Hanoi</title>
-</head>
-<body>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
-<script type="text/javascript">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Hanoi</title>
+    </head>
+    
+    <body>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
+        <script type="text/javascript">
 
-var a = [5, 4, 3, 2, 1, 0];
-var b = [];
-var c = [];
+            var $pegs = {
+                a: [5, 4, 3, 2, 1, 0],
+                b: [],
+                c: []
+            };
+            
+            //The hanoi class. Its sole purpose is to simulate Towers of Hanoi games.
+            Hanoi = function(hanoiDisk, hanoiSource, hanoiDest, hanoiSpare) {
+                this.disk = hanoiDisk;
+                this.steps = [];
+                this.source = hanoiSource;
+                this.dest = hanoiDest;
+                this.spare = hanoiSpare;
+                
+                this.moveDisk = function (source, dest) {
+                    dest.push(source.pop());// moves the disk
+                    
+                    // records the position of each disk in the array to "steps" instance variable
+                    // (used later to animate);
+                    this.steps.push([this.source.slice(0), this.dest.slice(0), this.spare.slice(0)]); 
+                };
+                
+                this.moveTower = function(disk, source, dest, spare) {
+                    if (disk === 0) {
+                        this.moveDisk(source, dest);
+                    }
+                    else {
+                        this.moveTower((disk - 1), source, spare, dest);
+                        this.moveDisk(source, dest);
+                        this.moveTower((disk - 1), spare, dest, source);
+                    }
+                };
+                    this.moveTower(this.disk, this.source, this.dest, this.spare);
+            };
 
-Hanoi = function(hanoiDisk, hanoiSource, hanoiDest, hanoiSpare) {
-    this.disk = hanoiDisk;
-    this.steps = [];
-    this.source = hanoiSource;
-    this.dest = hanoiDest;
-    this.spare = hanoiSpare;
-    this.moveDisk = function (source, dest) {
-        dest.push(source.pop());
-        this.steps.push([this.source.slice(0), this.dest.slice(0), this.spare.slice(0)]);
-    };
-    this.moveTower = function(disk, source, dest, spare) {
-        if (disk === 0) {
-            this.moveDisk(source, dest);
-        }
-        else {
-            this.moveTower((disk - 1), source, spare, dest);
-            this.moveDisk(source, dest);
-            this.moveTower((disk - 1), spare, dest, source);
-        }
-    };
-	this.moveTower(this.disk, this.source, this.dest, this.spare);
-};
+            //this function is executed when the page is ready and all the scripts are loaded
+            $(document).ready(function() {
+                
+                var pegs_els = []; //to hold HTML elements representing the 3 pegs
+                
+                for (var i=0; i < 3; i++) {
+                    var id = "peg" + (i+1);
+                    var peg_element = $('<div/>', { //creates the peg element
+                            id: id,
+                            class: "peg",
+                    });
+                    peg_element.appendTo('body'); //appends it to the DOM
+                    pegs_els.push(peg_element); //appends it to the pegs_els array
+                };
+                
+                $(".peg").css({ //sets peg style via its 'peg' class
+                    "background-color": "goldenrod",
+                    "height": 130,
+                    "width": 10,
+                    "top": 50,
+                    "position": "absolute",
+                });
+                
+                var left = 200;
+                $.each(pegs_els, function(index, peg){
+                    peg.css("left", left); //positions each peg 200px apart
+                    left += 200;
+                });
+                
+                var bottomBar = $('<div/>', { //bottom bar display
+                    id: "bottomBar",
+                });
+                
+                bottomBar.appendTo('body');
+                
+                $("#bottomBar").css({ // style for bottom bar
+                    "background-color": "goldenrod",
+                    "height": 10,
+                    "width": 700,
+                    "top": 180,
+                    "left": 50,
+                    "position": "absolute",
+                });
+                
+                var disks = [];
 
-$(document).ready(function() {
-    var pegs = [];
-	for (var i=0; i < 3; i++) {
-		var id = "peg" + (i+1);
-		var peg_element = $('<div/>', {
-			id: id,
-			class: "peg",
-		});
-		peg_element.appendTo('body');
-		pegs.push(peg_element);
-	};
-	$(".peg").css({
-	    "background-color": "goldenrod",
-		"height": 130,
-		"width": 10,
-		"top": 50,
-		"position": "absolute",
-		})
-	var left = 200;
-	$.each(pegs, function(index, peg){
-        peg.css("left", left);
-		left += 200;
-	});
-	var bottomBar = $('<div/>', {
-		id: "bottomBar",
-	});
-	bottomBar.appendTo('body');
-	$("#bottomBar").css({
-	    "background-color": "goldenrod",
-		"height": 10,
-		"width": 700,
-		"top": 180,
-		"left": 50,
-		"position": "absolute",
-		});
-    var disks = [];
-    for (var i=0; i < 6; i++) {
-        var id = "disk" + (i+1);
-        var disk_element = $('<div/>', {
-            id: id,
-            class: "disk",
-        });
-        disk_element.appendTo('body');
-        disks.push(disk_element);
-    };
-    $(".disk").css({
-        "height": 20,
-        "position": "absolute",
+                for (var i=0; i < 6; i++) {
+                    var id = "disk" + (i+1);
+                    var disk_element = $('<div/>', { //create disc elements
+                        id: id,
+                        class: "disk",
+                    });
+                    
+                    disk_element.appendTo('body');
+                    disks.push(disk_element);
+                };
 
-    });
-    colors = ["coral", "cornflowerblue", "teal", "gold", "greenyellow", "indianred"];
+                $(".disk").css({ //set common disk styles
+                    "height": 20,
+                    "position": "absolute",
+                });
 
-    $.each(disks, function(index, disk){
+                var colors = ["coral", "cornflowerblue", "teal", "gold", "greenyellow", "indianred"]; //CSS named colors
 
-        disk.css({width: 60 + (index * 20),
-            "background-color": colors[index],
-            "top": 60 + (index * 20),
-            "left": 175 - (index * 10),
-
-        });
-    });
-    var hanoi = new Hanoi(5, a, b, c);
-    var currentStep = 0;
-    var animate = function(){
-        var frameDuration = 300; //milliseconds
-        setTimeout(function(){
-            step = hanoi.steps[currentStep];
-            $.each(step, function(peg_index, step_disk_ar){
-                bottomBarTop = bottomBar.css("top");
-                topPos = parseInt(bottomBarTop);
-                $.each(step_disk_ar, function(n, disk_index){
-                    peg = pegs[peg_index];
-                    pegDisk = disks[disk_index];
-                    pegDiskHeight = pegDisk.css("height");
-                    pegDiskWidth = pegDisk.css("width");
-                    pegWidth = peg.css("width");
-                    pegLeft = peg.css("left");
-                    topPos -= parseInt(pegDiskHeight);
-                    leftPos = parseInt(pegLeft) - parseInt(pegDiskWidth) / 2 + parseInt(pegWidth) / 2;
-                    pegDisk.animate({
-                    "top": topPos,
-                    "left": leftPos
+                $.each(disks, function(index, disk){
+                    //set dynamic styles: color, width, and position based on index in disks array.
+                    disk.css({width: 60 + (index * 20), 
+                        "background-color": colors[index],
+                        "top": 60 + (index * 20),
+                        "left": 175 - (index * 10)
                     });
                 });
+                
+                //This is where the Hanoi simulation is actually run and the steps
+                //are stored in hanoi.steps
+                var hanoi = new Hanoi(5, $pegs.a, $pegs.b, $pegs.c);
+
+                var currentStep = 0;
+
+                //animates by setting a timeout and recursively calling animate again from 
+                //within the timeout function. Frame duration determines FPS. Here is 3 fps roughly.
+                var animate = function(){
+
+                    var frameDuration = 300; //milliseconds
+
+                    setTimeout(function(){
+
+                        //we're iterating over "steps" in the hanoi solving process.
+                        //each step is an array of 3 arrays, each one corresponding
+                        //to a "peg" in the hanoi simulation
+                        var step = hanoi.steps[currentStep];
+                        
+                        $.each(step, function(peg_index, step_disk_ar){
+
+                            var bottomBarTop = bottomBar.css("top");
+                            var topPos = parseInt(bottomBarTop);
+
+                            $.each(step_disk_ar, function(n, disk_index){
+                                
+                                var peg = pegs_els[peg_index];
+                                var pegDisk = disks[disk_index]; //disc that hanoi.steps is on this peg for this "step".
+                                
+                                var pegDiskHeight = pegDisk.css("height");
+                                var pegDiskWidth = pegDisk.css("width");
+
+                                var pegWidth = peg.css("width");
+                                var pegLeft = peg.css("left");
+
+                                var leftPos = parseInt(pegLeft) - parseInt(pegDiskWidth) / 2 + parseInt(pegWidth) / 2;
+
+                                topPos -= parseInt(pegDiskHeight);
+
+                                pegDisk.animate({ //set position of the disk. 
+                                    "top": topPos,
+                                    "left": leftPos
+                                });
+                                
+                            });
+                        });
+
+                        currentStep += 1;
+
+                        if (currentStep != hanoi.steps.length) {
+                            animate();
+                        }
+
+                    }, frameDuration);
+                };
+
+                animate(); //kicks off the animation cycle
+
             });
-            currentStep += 1;
-
-            if (currentStep != hanoi.steps.length) {
-                animate();}
-        }, frameDuration);
-
-    };
-    animate();
-
-});
 
 
-
-//console.log(a);
-//console.log(b);
-//console.log(c);
-
-</script>
-
-</body>
+        </script>
+    </body>
+    
 </html>
 
