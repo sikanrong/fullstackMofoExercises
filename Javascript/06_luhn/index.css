@@ -1,0 +1,57 @@
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+}
+
+p.validMessage {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+p.validMessage.valid {
+    color: green;
+}
+
+p.validMessage.invalid {
+    color: red;
+}
+
+input {
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #212121;
+    margin-top: 3px;
+    margin-right: 3px;
+    padding: 5px;
+}
+
+#checkmark{
+    display: none;
+}
+
+form {
+    display: inline-block;
+    border-radius: 10px;
+    border: 1px solid #212121;
+    padding: 20px;
+    background-color: #eee;
+    font-weight: bold;
+    font-size: 15px;
+    width: 230px;
+    height: 155px;
+    overflow: hidden;
+}
+
+form.valid #checkmark{
+    display: inline-block;
+}
+
+form.valid input{
+    border-color: green;
+    border-width: 2px;
+}
+
+form.invalid input{
+    border-color: red;
+}
+
