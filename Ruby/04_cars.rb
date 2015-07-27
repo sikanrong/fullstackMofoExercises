@@ -1,4 +1,7 @@
+#!/usr/bin/env ruby
+#
 #Aleksandra Gabka, Alexander Pilafian / 2015
+#https://fullstackmofo.wordpress.com/2015/07/26/exercise-04-euro-trip/
 
 require 'json'
 json_string = <<-JAVASCRIPT 
@@ -76,7 +79,6 @@ json_string = <<-JAVASCRIPT
  		}
 	] 
 }
-
 JAVASCRIPT
 
 class Util
@@ -102,6 +104,7 @@ class Util
     return d
   end
 end
+
 class Car
   attr_accessor :fuel, :passengers
   def initialize(fuel, current_city)
@@ -127,8 +130,6 @@ class Car
     long2 = dest_city.lng
     
     d = Util.get_distance(lat1, long1, lat2, long2)
-    
-    puts "#{@current_city.name} to #{dest_city.name}: #{d}"
 
     fuel_rate = 200 - 2 * (@total_weight / 10)
     @fuel -= d / fuel_rate
@@ -139,10 +140,7 @@ class Car
     end
     
     @current_city = dest_city
-    
   end
-  
-
 end
 
 class City
@@ -168,7 +166,7 @@ class Animal
   
 end
 
-class Human < Animal
+class Human < Animal #because humans ARE Animals, right?
   attr_accessor :name, :bank_balance, :weight, :age
   def initialize(name, bank_balance, weight, age)
     @bank_balance = bank_balance
@@ -182,8 +180,7 @@ class Human < Animal
 end
 
 $data_hash = JSON.parse(json_string)
-puts $data_hash
-  
+
 $animals = Hash.new
 $people = Hash.new
 $cities = Hash.new
@@ -212,7 +209,6 @@ car.travel($cities["Paris"])
 
 car.get_off($people["Shane"])
 car.get_on($animals["Cindy"])
-puts car.passengers
 car.travel($cities["Barcelona"])
 
 puts "Remaining money:"
@@ -221,5 +217,4 @@ $people.each do |pair|
   puts "#{person.name} : #{person.bank_balance}"
 end
 
-puts "Remaining gas:"
-puts car.fuel
+puts "Remaining gas: #{car.fuel}"

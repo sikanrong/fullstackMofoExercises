@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 #Alex Pilafian - Zeller Algorithm. 2015
-#https://docs.google.com/document/d/1BKHrV0SEhblnPUgcISKV1oIJ8ejC6jjhtXs_jX8CbWU/edit
+#https://fullstackmofo.wordpress.com/2015/07/26/exercise-01-zellers-algorithm/
 
 $days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -35,7 +35,7 @@ if(month <= 0) #if we've rewound the month past the first month
   end
 end
 
-#the zeller stuff is perfect. 
+#the zeller stuff
 w = (13 * month - 1) / 5 
 x = year / 4
 y = century / 4

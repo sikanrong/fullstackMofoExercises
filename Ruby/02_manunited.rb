@@ -1,18 +1,15 @@
 #!/usr/bin/env ruby
 
 #Alex Pilafian - "Manchester United"-themed data parsing program. 2015
-#https://docs.google.com/document/d/1NWtzQj1irzL86cv3A48HVxWdT2tRpJw7UQ8dWYHaHgA/edit?usp=drive_web
+#https://fullstackmofo.wordpress.com/2015/07/26/exercise-02-manchester-united/
 
 #The $-sign just denotes a global variable. 
 $scores = "Manchester United 1 Chelsea 0, Arsenal 1 Manchester United 1, Manchester United 3 Fulham 1, Liverpool 2 Manchester United 1, Swansea 2 Manchester United 4"
-
 
 def is_number?(str)
   #returns true if it can cast the string as a Float, and false if there is an error during the casting process.
   true if Float(str) rescue false
 end
-
-
 
 games_ar = Array.new
 
@@ -93,5 +90,3 @@ end
 manunited_stats.each do |k,v|
   puts "#{k} = #{v}"
 end
-
-#tomaYA!
